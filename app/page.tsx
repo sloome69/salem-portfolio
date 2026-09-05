@@ -85,8 +85,8 @@ const FluidSmokeBackground = () => {
             COLORFUL: true,
             COLOR_UPDATE_SPEED: 10,
             PAUSED: false,
-            BACK_COLOR: { r: 9, g: 9, b: 11 },
-            TRANSPARENT: false,
+            BACK_COLOR: { r: 0, g: 0, b: 0 },
+            TRANSPARENT: true,
             BLOOM: true,
             BLOOM_ITERATIONS: 8,
             BLOOM_RESOLUTION: 256,
@@ -106,7 +106,7 @@ const FluidSmokeBackground = () => {
   return (
     <canvas
       ref={canvasRef}
-      className="fixed inset-0 w-full h-full z-0 pointer-events-auto"
+      className="fixed inset-0 w-full h-full z-[2] pointer-events-auto"
     />
   );
 };
@@ -215,9 +215,9 @@ export default function Home() {
     <div className="min-h-screen text-zinc-100 font-sans selection:bg-emerald-500 selection:text-black relative overflow-hidden bg-zinc-950">
       {/* High-Tech Background Layer */}
       <div 
-        className="fixed inset-0 bg-cover bg-center bg-no-repeat opacity-20 pointer-events-none z-0" 
-        style={{ backgroundImage: "url('/bg-cybernetic.jpg')" }} 
-      />
+  className="fixed inset-0 bg-cover bg-center bg-no-repeat opacity-40 pointer-events-none z-[1]" 
+  style={{ backgroundImage: "url('/bg-cybernetic.jpg')" }} 
+/>
 
       {/* Background Fluid Canvas */}
       <FluidSmokeBackground />
