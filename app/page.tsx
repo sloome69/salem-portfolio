@@ -1,9 +1,5 @@
 'use client';
 
-import YrefMatrixViewer from '@/components/ui/YrefMatrixViewer';
-import InteractiveInfrastructureSuite from "@/components/InteractiveInfrastructureSuite";
-import InfrastructureMap from '@/components/InfrastructureMap';
-import RfqDashboard from '@/components/RfqDashboard';
 import React, { useEffect, useRef, useState } from 'react';
 import { motion, useScroll, useSpring, AnimatePresence } from 'framer-motion';
 import {
@@ -29,33 +25,34 @@ import {
   FileText
 } from 'lucide-react';
 
-// --- SOUND EFFECT GENERATOR ---
+import { portfolioData } from './data';
+import YrefMatrixViewer from '@/components/ui/YrefMatrixViewer';
+import InteractiveInfrastructureSuite from "@/components/InteractiveInfrastructureSuite";
+import InfrastructureMap from '@/components/InfrastructureMap';
+import RfqDashboard from '@/components/RfqDashboard';
+
+// --- AUDIO FEEDBACK PROTOCOL ---
 const playHoverSound = (enabled: boolean) => {
   if (!enabled) return;
   try {
-    const AudioCtx = window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
-    const ctx = new AudioCtx();
+    const ctx = new (window.AudioContext || (window as any).webkitAudioContext)();
     const osc = ctx.createOscillator();
     const gain = ctx.createGain();
-    
     osc.type = 'sine';
     osc.frequency.setValueAtTime(440, ctx.currentTime);
-    osc.frequency.exponentialRampToValueAtTime(880, ctx.currentTime + 0.08);
-    
-    gain.gain.setValueAtTime(0.03, ctx.currentTime);
-    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.08);
-    
+    osc.frequency.exponentialRampToValueAtTime(880, ctx.currentTime + 0.05);
+    gain.gain.setValueAtTime(0.02, ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.05);
     osc.connect(gain);
     gain.connect(ctx.destination);
-    
     osc.start();
-    osc.stop(ctx.currentTime + 0.08);
-  } catch (e) {
-    // Audio context initialization fallback
+    osc.stop(ctx.currentTime + 0.05);
+  } catch {
+    // Autoplay restrictions handle fallback silently
   }
 };
 
-// --- FLUID BACKGROUND COMPONENT ---
+// --- DYNAMIC FLUID BACKGROUND COMPONENT ---
 const FluidSmokeBackground = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [mounted, setMounted] = useState(false);
@@ -468,23 +465,27 @@ export default function Home() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="max-w-4xl"
+          className="max-w-4xl flex flex-col items-center"
         >
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-zinc-900/90 border border-zinc-800 text-xs text-emerald-400 mb-6 pointer-events-auto backdrop-blur-md">
-            <Sparkles className="w-3.5 h-3.5" />
-            <span>Head of Tech & Innovation Department</span>
-          </div>
+          {/* Hero Badge */}
+          <span className="inline-flex items-center gap-2 px-3 py-1.5 text-xs font-medium text-emerald-400 bg-emerald-500/10 rounded-full border border-emerald-500/20 mb-6 pointer-events-auto backdrop-blur-md">
+            <Bot className="w-3.5 h-3.5" />
+            {portfolioData?.personal?.title || "Head of Tech & Innovation Department"}
+          </span>
 
+          {/* Hero Name */}
           <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight mb-4 bg-gradient-to-b from-white via-zinc-200 to-zinc-500 bg-clip-text text-transparent leading-tight">
-            Abdul Samad Babillail
+            {portfolioData?.personal?.name || "Abdul Samad Babillail"}
           </h1>
 
-          <p className="text-emerald-400 text-sm md:text-base font-mono mb-6 tracking-wide">
-            Enterprise Endpoint Management, Cloud Identity & Infrastructure Leadership
+          {/* Tagline / Subtitle */}
+          <p className="text-emerald-400 text-sm md:text-base font-mono mb-4 tracking-wide">
+            {portfolioData?.personal?.location ? `${portfolioData.personal.location} | ${portfolioData.personal.phone}` : "Enterprise Endpoint Management, Cloud Identity & Infrastructure Leadership"}
           </p>
 
+          {/* Summary */}
           <p className="text-zinc-300 text-base md:text-lg max-w-2xl mx-auto leading-relaxed mb-8 font-medium">
-            Directing technology operations for 630+ active daily users across 350+ Apple iPads (Jamf/ASM), 80+ Windows PCs, 380+ STEM/Lab hardware assets, and enterprise Fortinet/Aruba network infrastructure.
+            {portfolioData?.personal?.summary || "Directing technology operations for 630+ active daily users across 350+ Apple iPads (Jamf/ASM), 80+ Windows PCs, 380+ STEM/Lab hardware assets, and enterprise Fortinet/Aruba network infrastructure."}
           </p>
 
           <div className="flex flex-wrap items-center justify-center gap-4 pointer-events-auto">
