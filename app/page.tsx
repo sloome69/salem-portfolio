@@ -160,7 +160,7 @@ export default function Home() {
   const [terminalOpen, setTerminalOpen] = useState(false);
   const [inputVal, setInputVal] = useState('');
   const [commandHistory, setCommandHistory] = useState<Array<{ cmd: string; result: string }>>([
-    { cmd: 'system.init', result: 'SAMAD-OS v3.0 loaded successfully. Type "help" for available commands.' }
+    { cmd: 'system.init', result: 'SALEM-OS v3.0 loaded successfully. Type "help" for available commands.' }
   ]);
   const [selectedCaseStudy, setSelectedCaseStudy] = useState<string | null>(null);
 
@@ -213,6 +213,12 @@ export default function Home() {
 
   return (
     <div className="min-h-screen text-zinc-100 font-sans selection:bg-emerald-500 selection:text-black relative overflow-hidden bg-zinc-950">
+      {/* High-Tech Background Layer */}
+      <div 
+        className="fixed inset-0 bg-cover bg-center bg-no-repeat opacity-20 pointer-events-none z-0" 
+        style={{ backgroundImage: "url('/bg-cybernetic.jpg')" }} 
+      />
+
       {/* Background Fluid Canvas */}
       <FluidSmokeBackground />
 
@@ -389,7 +395,7 @@ export default function Home() {
               <Terminal className="w-5 h-5" />
             </button>
             <span className="font-bold text-lg tracking-tight text-white">
-              SAMAD-OS <span className="text-xs text-emerald-400 font-mono ml-1">v3.0</span>
+              SALEM-OS <span className="text-xs text-emerald-400 font-mono ml-1">v3.0</span>
             </span>
           </div>
 
@@ -432,7 +438,7 @@ export default function Home() {
           >
             <div className="max-w-4xl mx-auto">
               <div className="flex items-center justify-between pb-2 border-b border-zinc-800 text-zinc-400 mb-3">
-                <span className="flex items-center gap-2"><Terminal className="w-4 h-4 text-emerald-400" /> SAMAD-OS Command Line Interface</span>
+                <span className="flex items-center gap-2"><Terminal className="w-4 h-4 text-emerald-400" /> SALEM-OS Command Line Interface</span>
                 <button onClick={() => setTerminalOpen(false)} className="hover:text-white"><X className="w-4 h-4" /></button>
               </div>
               <div className="max-h-40 overflow-y-auto space-y-1.5 mb-3 pr-2">

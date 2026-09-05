@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "SAMAD-OS v3.0 | Portfolio",
+  title: "SALEM-OS v3.0 | Portfolio",
   description: "Personal Command Center & Portfolio",
 };
 
